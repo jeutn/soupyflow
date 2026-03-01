@@ -10,7 +10,64 @@
     document.addEventListener("DOMContentLoaded", () => {
       document.title = APP_NAME;
       document.getElementById("app-title").textContent = `welcome to ${APP_NAME}!`;
+      
+      //always show timer display
+      const timerDisplay = document.getElementById("timer-display");
+
+      timerDisplay.textContent = "25:00";
+
     });
+
+    const DEFAULTS = {
+      pomodoro: 25,
+      longBreak: 15,
+      shortBreak: 5
+    }
+
+    let timeLeft = DEFAULTS.pomodoro * 60;
+    let timerInterval = null;
+    let running = false;
+
+    //function to update timer display 
+    function updateDisplay(time) {
+      const minutes = String(Math.floor(time / 60)).padStart(2, "0");
+      const seconds = String(time % 60).padStart(2, "0");
+
+      document.getElementById("timer-display").textContent = `${minutes}:${seconds}`;
+    }
+
+    //function to set times 
+    function setTimer(minutes) {
+      clearInterval(timerInterval); // stop any running timer
+      running = false;
+      timeLeft = minutes * 60;
+      updateDisplay(timeLeft); // just update display, don't start
+    }
+
+    //function for timer
+    function startTimer() {
+
+      if (running){
+        clearInterval(timerInterval);
+        running = false;
+        
+      } else {
+        timerInterval = setInterval(() => {
+          timeLeft--;
+          updateDisplay(timeLeft);
+
+          if (timeLeft <= 0) {
+            clearInterval(timerInterval);
+            running = false;
+            alert("Time for a break!");
+          }
+        }, 1000);
+        running = true;
+
+      }
+    }
+
+
   </script>
 
   <style>
@@ -21,6 +78,17 @@
           border: none;
           width: 125px;
           height: 30px;
+        }
+
+        .start-button {
+          background-color: #C9605D;
+          color: #FFFDF5;
+          border-radius: 20px;
+          border: none;
+          width: 250px;
+          height: 60px;
+          margin-bottom: 20px;
+          font-size: 1.5rem;
         }
         
         /* divider for space btw elements
@@ -43,6 +111,14 @@
         }
 
         h1, p {text-align: center; margin: 10px;} 
+
+        #timer-display {
+          font-size: 10rem;
+          font-weight: bold;
+          letter-spacing: 4px;
+          margin-bottom: 4px;
+          color: #C9605D;
+        }
         
     </style>
 </head>
@@ -51,11 +127,17 @@
   <h1 id="app-title"></h1>
   <p>a soup themed productivity timer (wip)</p>
 
-<div class="button-container">
-    <button title="pomodoro" class="red-button" onclick="alert('pomodoro')">pomodoro</button>
-    <button title="short break" class="red-button" onclick="alert('short break')">short break</button>
-    <button title="long break" class="red-button" onclick="alert('long break')">long break</button>
-</div>
+  <div id="timer-display"></div>
+
+  <div class="start-button">
+    <button title="start simmering" class="start-button" onclick="startTimer()">start simmering</button>
+  </div>
+
+  <div class="button-container">
+      <button title="pomodoro" class="red-button" onclick="setTimer(DEFAULTS.pomodoro)">pomodoro</button>
+      <button title="short break" class="red-button" onclick="setTimer(DEFAULTS.shortBreak)">short break</button>
+      <button title="long break" class="red-button" onclick="setTimer(DEFAULTS.longBreak)">long break</button>
+  </div>
 
 </body>
 </html>
