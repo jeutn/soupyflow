@@ -1,36 +1,54 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title>soupytime</title>
+  <title></title>
 
-<style>
-  .red-button {
-      background-color: #C9605D;
-      color: #FFFDF5;
-      border-radius: 10px;
-      border: none;
-      width: 125px;
-      height: 30px;
-  }
+  <script>
+    const APP_NAME = "soupyflow";
 
-  body {
-      display: flex;
-      flex-direction: column;       /* stack heading, text, buttons vertically */
-      justify-content: center;      /* center vertically */
-      align-items: center;          /* center horizontally */
-      height: 100vh;                /* make body take full screen height */
-      margin: 0;                    /* remove default browser margins */
-      background-color: #FFFDF5;    /* light background */
-      font-family: Arial, sans-serif;
-  }
+    // Set all name references once the page loads
+    document.addEventListener("DOMContentLoaded", () => {
+      document.title = APP_NAME;
+      document.getElementById("app-title").textContent = `welcome to ${APP_NAME}!`;
+    });
+  </script>
 
-  h1, p {text-align: center; margin: 10px;} 
+  <style>
+        .red-button {
+          background-color: #C9605D;
+          color: #FFFDF5;
+          border-radius: 10px;
+          border: none;
+          width: 125px;
+          height: 30px;
+        }
         
-</style>
+        /* divider for space btw elements
+        .divider{
+          width:5px;
+          height:auto;
+          display:inline-block;
+        }
+          */
+
+        body {
+            display: flex;
+            flex-direction: column;       /* stack heading, text, buttons vertically */
+            justify-content: center;      /* center vertically */
+            align-items: center;          /* center horizontally */
+            height: 100vh;                /* make body take full screen height */
+            margin: 0;                    /* remove default browser margins */
+            background-color: #FFFDF5;    /* light background */
+            font-family: Arial, sans-serif;
+        }
+
+        h1, p {text-align: center; margin: 10px;} 
+        
+    </style>
 </head>
 
 <body>
-  <h1>welcome to soupytime!</h1>
+  <h1 id="app-title"></h1>
   <p>a soup themed productivity timer (wip)</p>
 
 <div class="button-container">
